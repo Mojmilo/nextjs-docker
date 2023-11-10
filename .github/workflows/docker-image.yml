@@ -17,16 +17,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Test
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag nextjs-docker:$VERSION
+    - name: Stop existing Docker container
       run: |
         if [ "$(docker ps -q --filter "name=nextjs-docker")" ]; then
           docker stop nextjs-docker
         else
           echo "Container 'nextjs-docker' does not exist."
         fi
-   # - name: Build the Docker image
-   #   run: docker build . --file Dockerfile --tag nextjs-docker:$VERSION
-   # - name: Stop the Docker container
-   #   run: docker ps -q --filter "name=nextjs-docker" | grep -q . && docker stop nextjs-docker
-   # - name: Run the Docker container
-   #   run: docker run -d -p 3000:3000 --name nextjs-docker nextjs-docker:$VERSION
+    - name: Run the Docker container
+      run: docker run -d -p 3000:3000 --name nextjs-docker nextjs-docker:$VERSION
