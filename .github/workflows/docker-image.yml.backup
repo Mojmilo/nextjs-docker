@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Remove existing Docker container
+      run: docker rm --force nextjs-docker
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag nextjs-docker:latest
+    - name: Run the Docker container
+      run: docker run -d -p 3000:3000 --name nextjs-docker nextjs-docker:latest
