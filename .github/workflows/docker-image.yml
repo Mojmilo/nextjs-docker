@@ -18,7 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Stop the Docker container
-      run: docker stop nextjs-docker
+      run: docker stop nextjs-docker || true
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag nextjs-docker:$VERSION
     - name: Run the Docker container
