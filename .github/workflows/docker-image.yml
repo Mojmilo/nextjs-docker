@@ -27,4 +27,4 @@ jobs:
           echo "Container 'nextjs-docker' does not exist."
         fi
     - name: Run the Docker container
-      run: docker run -d -p 3000:3000 --name nextjs-docker nextjs-docker:$VERSION
+      run: docker run -d -p 3000:3000 --name nextjs-docker:$VERSION nextjs-docker:$VERSION
