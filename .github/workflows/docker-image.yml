@@ -12,23 +12,14 @@ jobs:
 
     runs-on: self-hosted
 
+    env:
+      VERSION: "0.1.0"
+
     steps:
-    - uses: actions/checkout@v3
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '14'
-
-    - name: Get package version
-      id: package_version
-      run: echo "::set-output name=version::$(node -pe "require('./package.json').version")"
-
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag nextjs-docker:${{ steps.package_version.outputs.version }}
-
-    - name: Remove the Docker container
-      run: docker rm --force nextjs-docker
-
-    - name: Run the Docker container
-      run: docker run -d -p 3000:3000 --name nextjs-docker nextjs-docker:${{ steps.package_version.outputs.version }}
+      - uses: actions/checkout@v3
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag nextjs-docker:$VERSION
+      - name: Remove the Docker container
+        run: docker rm --force nextjs-docker
+      - name: Run the Docker container
+        run: docker run -d -p 3000:3000 --name nextjs-docker nextjs-docker:$VERSION
