@@ -18,7 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Test
-      run: docker ps -q --filter "name=nextjs-docker"
+      run: docker ps -q --filter "name=nextjs-docker" | grep -q . && docker stop nextjs-docker
    # - name: Build the Docker image
    #   run: docker build . --file Dockerfile --tag nextjs-docker:$VERSION
    # - name: Stop the Docker container
