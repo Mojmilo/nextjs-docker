@@ -17,6 +17,6 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag nextjs-docker:latest
     - name: Stop existing Docker container
-      run: docker stop nextjs-docker || true
+      run: docker stop nextjs-docker
     - name: Run the Docker container
       run: docker run -d -p 3000:3000 nextjs-docker:latest
